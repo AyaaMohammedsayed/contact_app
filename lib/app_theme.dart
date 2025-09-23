@@ -49,6 +49,7 @@ class AppTheme {
       )
     ),
     inputDecorationTheme: InputDecorationTheme(
+      
       hintStyle: TextStyle(
                 fontSize: 16,
         fontWeight: FontWeight.w400,
@@ -57,6 +58,10 @@ class AppTheme {
       filled: true,
       fillColor: primary,
       enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(width: 1,color: beige)
+      ),
+      focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(width: 1,color: beige)
       ),

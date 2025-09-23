@@ -1,5 +1,6 @@
 import 'package:contact_app/app_theme.dart';
 import 'package:contact_app/home_screen.dart';
+import 'package:contact_app/second_content.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +16,8 @@ class ContactApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: HomeScreen.routeName,
       routes: {
-        HomeScreen.routeName:(_)=>HomeScreen()
+        HomeScreen.routeName:(_)=>HomeScreen(),
+        SecondContent.routeName:(_)=>SecondContent()
       },
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,

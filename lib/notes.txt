@@ -1,0 +1,87 @@
+void _showAddingContactSheet(BuildContext context) {
+  showModalBottomSheet(
+    isScrollControlled: true, // يخلي البوتوم شيت يقدر يطلع لفوق مع الكيبورد
+    context: context,
+    backgroundColor: Colors.transparent, // يبان الديكور اللي جوه
+    builder: (context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom, // يرفع مع الكيبورد
+        ),
+        child: ModalBottomSheet(
+          chageIsEmpty: changeIsEmpty,
+        ),
+      );
+    },
+  );
+}
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class UploadImageExample extends StatefulWidget {
+  @override
+  _UploadImageExampleState createState() => _UploadImageExampleState();
+}
+
+class _UploadImageExampleState extends State<UploadImageExample> {
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Upload Image")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _image != null 
+              ? Image.file(_image!, height: 200) 
+              : Text("No image selected"),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text("Pick Image"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    SecondContent.routeName,
+                    (Route<dynamic> route) => false,
+                  );
+                    floatingActionButton: Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      FloatingActionButton(
+        heroTag: "btn1",
+        onPressed: () {
+          // زرار الاول
+        },
+        child: Icon(Icons.add),
+      ),
+      SizedBox(height: 12), // مسافة بين الزرين
+      FloatingActionButton(
+        heroTag: "btn2",
+        onPressed: () {
+          // زرار التاني
+        },
+        child: Icon(Icons.edit),
+      ),
+    ],
+  ),

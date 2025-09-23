@@ -1,5 +1,8 @@
+import 'package:contact_app/app_theme.dart';
 import 'package:contact_app/first_screen.dart';
+import 'package:contact_app/models/contact_model.dart';
 import 'package:contact_app/second_content.dart';
+import 'package:contact_app/widgets/model_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,22 +14,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isEmpty = true;
-  bool isFull = true;
+
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-     
-          isEmpty = false;
-          setState(() {
-            
-          });
+          _showAddingContactSheet(context);
         },
-        child:isFull==false? Icon(Icons.add):SvgPicture.asset('assets/icons/delete.svg',fit: BoxFit.scaleDown,width: 16,height: 4,),
+        child: 
+             Icon(Icons.add)
+      
       ),
       appBar: AppBar(
         leading: Image.asset(
@@ -38,9 +39,24 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: isEmpty == true ? FirstScreen() : SecondContent(),
+        child: FirstScreen(),
       ),
     );
   }
 
+  void _showAddingContactSheet(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: ModalBottomSheet(),
+        );
+      },
+    );
+  }
 }
