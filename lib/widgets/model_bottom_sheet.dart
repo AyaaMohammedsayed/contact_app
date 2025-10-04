@@ -120,11 +120,10 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                     model.email = email.text;
                     model.phone = phone.text;
                   });
-                  Navigator.pushNamedAndRemoveUntil(
+                  Navigator.pop(
                     context,
-                    SecondContent.routeName,
-                    arguments: model,
-                    (Route<dynamic> route) => false,
+                model,
+              
                   );
                 },
                 child: Text(

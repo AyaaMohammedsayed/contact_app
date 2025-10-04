@@ -1,5 +1,5 @@
 import 'package:contact_app/app_theme.dart';
-import 'package:contact_app/first_screen.dart';
+import 'package:contact_app/first_content.dart';
 import 'package:contact_app/models/contact_model.dart';
 import 'package:contact_app/second_content.dart';
 import 'package:contact_app/widgets/model_bottom_sheet.dart';
@@ -39,24 +39,33 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: FirstScreen(),
+        child: FirstContent(),
       ),
     );
   }
+void _showAddingContactSheet(BuildContext context) async {
+  final newContact = await showModalBottomSheet<ContactModel>(
+    isScrollControlled: true,
+    context: context,
+    backgroundColor: Colors.transparent,
+    builder: (context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: ModalBottomSheet(),
+      );
+    },
+  );
 
-  void _showAddingContactSheet(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: ModalBottomSheet(),
-        );
-      },
+  if (newContact != null) {
+    Navigator.pushReplacementNamed(
+      context,
+      SecondContent.routeName,
+      arguments: newContact,
     );
   }
+}
+
+
 }
