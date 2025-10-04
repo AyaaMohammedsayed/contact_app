@@ -24,6 +24,20 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
   );
   final ImagePicker _picker = ImagePicker();
   @override
+void initState() {
+  super.initState();
+  name.addListener(() {
+    setState(() {});
+  });
+  email.addListener(() {
+    setState(() {});
+  });
+  phone.addListener(() {
+    setState(() {});
+  });
+}
+
+  @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 

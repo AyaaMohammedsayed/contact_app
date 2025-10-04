@@ -15,18 +15,17 @@ class SecondContent extends StatefulWidget {
 
 class _SecondContentState extends State<SecondContent> {
   List<ContactModel> models = [];
+  bool _isInitialized = false; // عشان الكونتاكت ما يتضافش غير مرة واحدة
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null && args is ContactModel) {
-
-      if (!models.contains(args)) {
-        setState(() {
-          models.add(args);
-        });
+    if (!_isInitialized) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      if (args != null && args is ContactModel) {
+        models.add(args);
       }
+      _isInitialized = true;
     }
   }
 
@@ -35,7 +34,7 @@ class _SecondContentState extends State<SecondContent> {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-            appBar: AppBar(
+      appBar: AppBar(
         leading: Image.asset(
           'assets/images/route_logo.png',
           width: 117,
@@ -50,7 +49,9 @@ class _SecondContentState extends State<SecondContent> {
             heroTag: "deleteBtn",
             backgroundColor: AppTheme.red,
             onPressed: () {
-              models.clear();
+              setState(() {
+                models.clear();
+              });
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 HomeScreen.routeName,
@@ -70,14 +71,31 @@ class _SecondContentState extends State<SecondContent> {
         ],
       ),
       body: GridView.builder(
-        padding: EdgeInsets.symmetric(vertical:27 ,horizontal:16 ),
+        padding: EdgeInsets.symmetric(vertical: 27, horizontal: 8),
         itemCount: models.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         ),
-        itemBuilder: (context, index) {
-          return ContactView(model: models[index]);
-        },
+itemBuilder: (context, index) {
+  return ContactView(
+    model: models[index],
+    onDelete: () {
+      print("Deleting index $index");  // ✅ دي لازم تطلع في الـ console
+      setState(() {
+        models.removeAt(index);
+      });
+      if (models.isEmpty) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          HomeScreen.routeName,
+          (Route<dynamic> route) => false,
+        );
+      }
+    },
+  );
+},
+
+     
       ),
     );
   }
