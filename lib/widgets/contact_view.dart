@@ -62,7 +62,7 @@ class _ContactViewState extends State<ContactView> {
           ),
 
           Positioned(
-            bottom: -140,
+            
             left: 0,
             right: 0,
             child: Container(
